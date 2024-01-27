@@ -1,0 +1,23 @@
+A seven day weather forecast says it's going to be 92 degrees Fahrenheit. What is the 95% confidence interval around this point estimate?
+
+A confidence interval is a range that contains the actual value with a given probability. Is it 92 plus-minus 5? Maybe 92 plus-minus 20?
+
+To answer this question, let's see how close previous forecasts were to reality.
+
+Here are historical seven day forecasts for New York City between January, 2022 and September, 2023, and the actual temperature observed on day seven.
+
+Look at the differences between the actuals and the forecast. In statistics those are called residuals, and conformal prediction uses even fancier term nonconformity score, but I promised no big words so I'll just call them differences.
+
+Next, sort the differences, and pick quantiles that correspond to the width of the confidence interval we want. In this example, we'll need to pick second smallest and second largest. 
+
+Finally, use them to construct confidence intervals.
+
+Looks like 95% confidence interval around seven day forecast is plus-minus 10 degrees Fahrenheit.
+
+This naïve approach works if the model was not built on the same data that was used for calibration. Otherwise confidence intervals can be too narrow. An extremely overfit model, with zero error in-sample, will have overly optimistic, zero width confidence intervals.
+
+If we only have one modeling dataset, we can split it into development and calibration, fit the model on development data, then use calibration data for confidence interval estimation. This approach is called split conformal. It solves the overfitting issue, but at the cost of using less data for model development.
+
+The final trick that allows to use almost all data for modeling is to split the data in more chunks, like in cross validation. For each chunk, build the model on the data excluding that chunk, then look at the differences between that chunk's actuals and model prediction. Because there is more than one model, it is no longer enough to take the quantiles of the differences. Instead, one needs to take quantiles of model predictions plus the differences. This final algorithm is called CV+.
+
+For big words, see "Predictive inference with the Jackknife+" by Rina Foygel Barber and others.
