@@ -1,6 +1,6 @@
 # To run,
 #
-# manim -pqh --disable_caching ConformalPredictionWithoutBigWord.py ConformalPredictionWithoutBigWords
+# manim -pqk --disable_caching ConformalPredictionWithoutBigWords.py ConformalPredictionWithoutBigWords
 #
 from manim import *
 import numpy as np
